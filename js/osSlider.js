@@ -45,7 +45,7 @@ function osSlider(objs) {
                 'width':that.width + 'px',
                 'height':that.height + 'px',
                 'overflow':'hidden',
-                'position':'relative',
+                'position':'absolute',
                 'top':'0px',
                 'left':'0px',
                 'z-index':indexNum
@@ -163,7 +163,7 @@ function osSlider(objs) {
             $(that.cNodes[that.nowNodeKey]).append($cvNode);
             $cvNode.html($backHTML);
             $cvNode.css({//为每个栅格节点添加css样式
-                'position':'relative',
+                'position':'absolute',
                 'width':that.width/1+'px',
                 'height':that.height+'px',
                 'zIndex':20,
@@ -243,7 +243,7 @@ function osSlider(objs) {
             $(that.cNodes[that.nowNodeKey]).append($cvNode);
             $cvNode.html($backHTML);
             $cvNode.css({//为每个栅格节点添加css样式
-                'position':'relative',
+                'position':'absolute',
                 'width':that.width+'px',
                 'height':that.height/1+'px',
                 'zIndex':20,
@@ -320,7 +320,7 @@ function osSlider(objs) {
             $(that.cNodes[that.nowNodeKey]).append($cvNode);
             $cvNode.html($backHTML);
             $cvNode.css({//为每个栅格节点添加css样式
-                'position':'relative',
+                'position':'absolute',
                 'width':that.width/1+'px',
                 'height':that.height/1+'px',
                 'zIndex':20,
