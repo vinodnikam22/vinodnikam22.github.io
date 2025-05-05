@@ -1,30 +1,33 @@
 <?php
-// Check for empty fields
-//if(empty($_POST['name'])      ||
-  // empty($_POST['email'])     ||
-   //empty($_POST['phone'])     ||
-   //empty($_POST['message'])   ||
-   //!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL))
-   //{
-   //echo "No arguments Provided!";
-   //return false;
-   //}
-   if(empty($_POST['email'])) {
-	   echo "no email found!";
-   }else {
-	   echo "email received!";
-   }
-//$name = strip_tags(htmlspecialchars($_POST['name']));
-//$email_address = strip_tags(htmlspecialchars($_POST['email']));
-//$phone = strip_tags(htmlspecialchars($_POST['phone']));
-//$message = strip_tags(htmlspecialchars($_POST['message']));
-   
+// Check for required fields
+if(empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    echo "No valid email provided!";
+    exit;
+}
+
+// Sanitize inputs
+$name = isset($_POST['name']) ? strip_tags(htmlspecialchars($_POST['name'])) : '';
+$email_address = strip_tags(htmlspecialchars($_POST['email']));
+$phone = isset($_POST['phone']) ? strip_tags(htmlspecialchars($_POST['phone'])) : '';
+$message = isset($_POST['message']) ? strip_tags(htmlspecialchars($_POST['message'])) : '';
+
 // Create the email and send the message
-$to = 'yourname@yourdomain.com'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
-$email_subject = "Website Contact Form:  $name";
-$email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
-$headers = "From: noreply@yourdomain.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
-$headers .= "Reply-To: $email_address";   
-mail($to,$email_subject,$email_body,$headers);
-return true;         
+$to = 'yourname@yourdomain.com';
+$email_subject = "Website Contact Form: $name";
+$email_body = "You have received a new message from your website contact form.\n\n".
+              "Here are the details:\n\nName: $name\n\nEmail: $email_address\n\n".
+              "Phone: $phone\n\nMessage:\n$message";
+              
+$headers = "From: noreply@yourdomain.com\r\n";
+$headers .= "Reply-To: $email_address\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+// Attempt to send email
+if(mail($to, $email_subject, $email_body, $headers)) {
+    echo "Message successfully sent!";
+    return true;
+} else {
+    echo "Message delivery failed!";
+    return false;
+}
 ?>
